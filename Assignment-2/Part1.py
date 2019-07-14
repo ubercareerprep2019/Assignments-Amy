@@ -42,32 +42,22 @@ class OrganizationStructure(object):
         self.ceo = ceo
 
     def print_level_by_level(self):
-        self.ceo.print_info()
-        self.print_level_by_level_helper(self.ceo)
+        nodes_to_print = Queue()
+        nodes_to_print.enqueue(self.ceo)
+        newLevel = Employee(None, None, None)
+        nodes_to_print.enqueue(newLevel)
 
-    def print_level_by_level_helper(self, employee):
-        if employee is not None:
-            print("")  # Needed to have new line between levels
-            nodes_to_print = Queue()
-            if employee.directReports is not None:  # Queue all of the employee's children
-                for report in employee.directReports:
-                    if report is not None:
-                        nodes_to_print.enqueue(report)
-
-            nodes_to_recurse = Queue()  # Create new queue to recurse on after dequeueing current level
-            while not nodes_to_print.isEmpty():  # Dequeue node
-                employee = nodes_to_print.dequeue()
-                if employee is not None:
-                    employee.print_info()
-                    # Add the dequeued node's children (if they exist) to the queue
-                    if employee.directReports is not None:
-                        for report in employee.directReports:
-                            if report is not None:
-                                nodes_to_recurse.enqueue(report)
-
-
-            while not nodes_to_recurse.isEmpty():
-                self.print_level_by_level_helper(nodes_to_recurse.dequeue())
+        while not nodes_to_print.isEmpty():  # Dequeue node
+            employee = nodes_to_print.dequeue()
+            if employee is not None:
+                employee.print_info()
+                # Add the dequeued node's children (if they exist) to the queue
+                if employee.directReports is not None:
+                    for report in employee.directReports:
+                        if report is not None:
+                            nodes_to_print.enqueue(report)
+                if employee == newLevel and not nodes_to_print.isEmpty():
+                    nodes_to_print.enqueue(newLevel)  # Add space if we reached current end of level (and not the tree)
 
 
 class Employee(object):
@@ -105,5 +95,5 @@ def excercise2():
 
 
 if __name__ == "__main__":
-    # excercise1()
+    excercise1()
     excercise2()
