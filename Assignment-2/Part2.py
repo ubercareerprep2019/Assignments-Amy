@@ -1,4 +1,4 @@
-# Part 3: Trees (Exercise 4-6)
+# Part 2: Trees (Exercise 4-6)
 
 # For exercise 6
 import csv
