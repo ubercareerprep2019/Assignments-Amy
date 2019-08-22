@@ -55,5 +55,4 @@ def test_exercise_5():
 
 
 if __name__ == "__main__":
-    """ Runs all tests for exercises 1 - 3 """
     test_exercise_5()
